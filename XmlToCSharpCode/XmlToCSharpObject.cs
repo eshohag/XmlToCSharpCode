@@ -1,12 +1,9 @@
-﻿using System.IO;
-using System.Net;
-
-namespace XmlToCSharpCode
+﻿namespace XmlToCSharpCode
 {
     public class XmlToCSharpObject
     {
 
-        public static string ObjectProperties(string path)
+        public static string XmlPropertiesToCSharpProperties(string path)
         {
             string line;
             string objectProperties = "";
@@ -52,27 +49,6 @@ namespace XmlToCSharpCode
             }
             file.Close();
             return objectProperties;
-        }
-        public static string PostXMLData(string destinationUrl, string requestXml)
-        {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(destinationUrl);
-            byte[] bytes;
-            bytes = System.Text.Encoding.ASCII.GetBytes(requestXml);
-            request.ContentType = "text/xml; encoding='utf-8'";
-            request.ContentLength = bytes.Length;
-            request.Method = "POST";
-            Stream requestStream = request.GetRequestStream();
-            requestStream.Write(bytes, 0, bytes.Length);
-            requestStream.Close();
-            HttpWebResponse response;
-            response = (HttpWebResponse)request.GetResponse();
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                Stream responseStream = response.GetResponseStream();
-                var responseStr = new StreamReader(responseStream).ReadToEnd();
-                return "Ok";
-            }
-            return null;
         }
     }
 }
