@@ -29,19 +29,19 @@ namespace XmlToCSharpCode
             return null;
         }
 
-        public static Stream ToStream(this string xmlTextResponse)
+        public static Stream ToStream(this string xmlResponse)
         {
             var stream = new MemoryStream();
             var writer = new StreamWriter(stream);
-            writer.Write(xmlTextResponse);
+            writer.Write(xmlResponse);
             writer.Flush();
             stream.Position = 0;
             return stream;
         }
 
-        public static T ParseXML<T>(this string xmlTextResponse) where T : class
+        public static T ParseXML<T>(this string xmlResponse) where T : class
         {
-            var reader = XmlReader.Create(xmlTextResponse.Trim().ToStream(), new XmlReaderSettings() { ConformanceLevel = ConformanceLevel.Document });
+            var reader = XmlReader.Create(xmlResponse.Trim().ToStream(), new XmlReaderSettings() { ConformanceLevel = ConformanceLevel.Document });
             return new XmlSerializer(typeof(T)).Deserialize(reader) as T;
         }
     }
