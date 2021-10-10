@@ -1,6 +1,8 @@
 ﻿using System.IO;
+using System.Linq;
 using System.Net;
 using System.Xml;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 
 namespace XmlToCSharpCode
@@ -43,6 +45,29 @@ namespace XmlToCSharpCode
         {
             var reader = XmlReader.Create(xmlResponse.Trim().ToStream(), new XmlReaderSettings() { ConformanceLevel = ConformanceLevel.Document });
             return new XmlSerializer(typeof(T)).Deserialize(reader) as T;
+        }
+
+        //Implemented based on interface, not part of algorithm
+        public static string RemoveXMLNamespaces(this string xmlDocument)
+        {
+            XElement xmlDocumentWithoutNs = RemoveXMLNamespaces(XElement.Parse(xmlDocument));
+            return xmlDocumentWithoutNs.ToString();
+        }
+
+        //Core recursion function
+        private static XElement RemoveXMLNamespaces(XElement xmlDocument)
+        {
+            if (!xmlDocument.HasElements)
+            {
+                XElement xElement = new XElement(xmlDocument.Name.LocalName);
+                xElement.Value = xmlDocument.Value;
+
+                foreach (XAttribute attribute in xmlDocument.Attributes())
+                    xElement.Add(attribute);
+
+                return xElement;
+            }
+            return new XElement(xmlDocument.Name.LocalName, xmlDocument.Elements().Select(el => RemoveXMLNamespaces(el)));
         }
     }
 }

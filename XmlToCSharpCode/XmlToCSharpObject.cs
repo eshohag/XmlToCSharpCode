@@ -2,7 +2,6 @@
 {
     public class XmlToCSharpObject
     {
-
         public static string XmlPropertiesToCSharpProperties(string path)
         {
             string line;
