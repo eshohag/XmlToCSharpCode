@@ -9,9 +9,9 @@ namespace XmlToCSharpCode
         static void Main(string[] args)
         {
 
-            //var path = @"c:\xmlFileData.txt";
-            //var objectProperties = XmlToCSharpObject.XmlPropertiesToCSharpProperties(path);
-            //Console.WriteLine(objectProperties);
+            var path = @"c:\xmlFileData.txt";
+            var objectProperties = XmlToCSharpCode.XmlHelper.XmlPropertiesToCSharpProperties(path);
+            Console.WriteLine(objectProperties);
 
             #region CSharpModelToXML
             //XmlSerializer serializer = new XmlSerializer(typeof(PersonInfo));
@@ -40,17 +40,17 @@ namespace XmlToCSharpCode
 
             string XmlHelper = xml.RemoveXMLNamespaces();
 
-            XmlSerializer serializer = new XmlSerializer(typeof(Envelope));
+            XmlSerializer serializer = new XmlSerializer(typeof(EnvelopeTCSResponse));
             using (StringReader reader = new StringReader(XmlHelper))
             {
-                var success = (Envelope)serializer.Deserialize(reader);
+                var success = (EnvelopeTCSResponse)serializer.Deserialize(reader);
             }
 
             var failed = File.ReadAllText(@"c:\Failed.xml");
             var failedString = failed.RemoveXMLNamespaces();
             using (StringReader reader = new StringReader(failedString))
             {
-                var failedResult = (Envelope)serializer.Deserialize(reader);
+                var failedResult = (EnvelopeTCSResponse)serializer.Deserialize(reader);
             }
             #endregion
 

@@ -12,7 +12,6 @@ namespace XmlToCSharpCode
     [XmlRoot(ElementName = "RsHeader")]
     public class RsHeader
     {
-
         [XmlElement(ElementName = "Filler1")]
         public int Filler1;
 
@@ -163,9 +162,8 @@ namespace XmlToCSharpCode
     }
 
     [XmlRoot(ElementName = "Envelope")]
-    public class Envelope
+    public class EnvelopeTCSResponse
     {
-
         [XmlElement(ElementName = "Body")]
         public Body Body;
     }
